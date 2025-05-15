@@ -15,7 +15,7 @@ class TestLoginCourier:
             "password": login_pass[1],
         }
 
-        response = requests.post(f"{Urls.base_url}/api/v1/courier/login", data=payload)
+        response = requests.post(f"{Urls.base_url}{Urls.api_login_courier}", data=payload)
 
         assert response.status_code == 200
 
@@ -30,7 +30,7 @@ class TestLoginCourier:
             "password": login_pass[1],
         }
 
-        response = requests.post(f"{Urls.base_url}/api/v1/courier/login", data=payload)
+        response = requests.post(f"{Urls.base_url}{Urls.api_login_courier}", data=payload)
         assert response.status_code == 200
 
 
@@ -45,7 +45,7 @@ class TestLoginCourier:
             "password": login_pass2[1],
         }
 
-        response = requests.post(f"{Urls.base_url}/api/v1/courier/login", data=payload)
+        response = requests.post(f"{Urls.base_url}{Urls.api_login_courier}", data=payload)
         assert response.status_code == 404
 
 
@@ -58,14 +58,14 @@ class TestLoginCourier:
             "password": login_pass[1],
         }
 
-        response = requests.post(f"{Urls.base_url}/api/v1/courier/login", data=payload)
+        response = requests.post(f"{Urls.base_url}{Urls.api_login_courier}", data=payload)
         assert response.status_code == 400
 
 
     @allure.title('если авторизоваться под несуществующим пользователем, запрос возвращает ошибку;')
     def test_login_courier_non_user(self,create_courier_dto):
 
-        response = requests.post(f"{Urls.base_url}/api/v1/courier/login", data=create_courier_dto)
+        response = requests.post(f"{Urls.base_url}{Urls.api_login_courier}", data=create_courier_dto)
         assert response.status_code == 404
 
 
@@ -79,5 +79,5 @@ class TestLoginCourier:
             "password": login_pass[1],
         }
 
-        response = requests.post(f"{Urls.base_url}/api/v1/courier/login", data=payload)
+        response = requests.post(f"{Urls.base_url}{Urls.api_login_courier}", data=payload)
         assert  'id' in response.json()

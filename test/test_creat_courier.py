@@ -8,7 +8,7 @@ class TestCreateCourier:
     @allure.title('Проверка создание курьера')
     def test_create_courier(self,create_courier_dto):
 
-        response = requests.post(f"{Urls.base_url}/api/v1/courier", data=create_courier_dto)
+        response = requests.post(f"{Urls.base_url}{Urls.api_create_courier}", data=create_courier_dto)
         assert response.json() == {'ok': True}
         assert response.status_code == 201
 
@@ -16,8 +16,8 @@ class TestCreateCourier:
     @allure.title('Проверка нельзя создать 2х одинаковых курьеров')
     def test_double_create_courier(self,create_courier_dto):
 
-        response1 = requests.post(f"{Urls.base_url}/api/v1/courier", data=create_courier_dto)
-        response2 = requests.post(f"{Urls.base_url}/api/v1/courier", data=create_courier_dto)
+        response1 = requests.post(f"{Urls.base_url}{Urls.api_create_courier}", data=create_courier_dto)
+        response2 = requests.post(f"{Urls.base_url}{Urls.api_create_courier}", data=create_courier_dto)
 
         assert response1.status_code == 201
         assert response2.status_code == 409
@@ -33,7 +33,7 @@ class TestCreateCourier:
 
         create_courier_dto.pop(missing_field)
 
-        response = requests.post(f"{Urls.base_url}/api/v1/courier", data=create_courier_dto)
+        response = requests.post(f"{Urls.base_url}{Urls.api_create_courier}", data=create_courier_dto)
 
         assert response.status_code == 400
 
@@ -41,7 +41,7 @@ class TestCreateCourier:
     @allure.title('Проверка создание курьера, запрос возвращает правильный код ответа')
     def test_201_create_courier(self,create_courier_dto):
 
-        response = requests.post(f"{Urls.base_url}/api/v1/courier", data=create_courier_dto)
+        response = requests.post(f"{Urls.base_url}{Urls.api_create_courier}", data=create_courier_dto)
 
         assert response.status_code == 201
 
@@ -49,7 +49,7 @@ class TestCreateCourier:
     @allure.title('Проверка создание курьера, успешный запрос возвращает "ok":true')
     def test_create_courier_ok_response(self,create_courier_dto):
 
-        response = requests.post(f"{Urls.base_url}/api/v1/courier", data=create_courier_dto)
+        response = requests.post(f"{Urls.base_url}{Urls.api_create_courier}", data=create_courier_dto)
         assert response.json() == {'ok': True}
 
 
@@ -63,7 +63,7 @@ class TestCreateCourier:
 
         create_courier_dto.pop(missing_field)
 
-        response = requests.post(f"{Urls.base_url}/api/v1/courier", data=create_courier_dto)
+        response = requests.post(f"{Urls.base_url}{Urls.api_create_courier}", data=create_courier_dto)
 
         assert response.status_code == 400
 
@@ -77,8 +77,8 @@ class TestCreateCourier:
             "firstName": create_courier_dto['firstName']+'1'
         }
 
-        response = requests.post(f"{Urls.base_url}/api/v1/courier", data=create_courier_dto)
-        response2 = requests.post(f"{Urls.base_url}/api/v1/courier", data=payload2)
+        response = requests.post(f"{Urls.base_url}{Urls.api_create_courier}", data=create_courier_dto)
+        response2 = requests.post(f"{Urls.base_url}{Urls.api_create_courier}", data=payload2)
 
         assert response.status_code == 201
         assert response2.status_code == 409
