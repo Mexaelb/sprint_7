@@ -17,7 +17,7 @@ class TestLoginCourier:
 
         response = requests.post(f"{Urls.base_url}{Urls.api_login_courier}", data=payload)
 
-        assert response.status_code == 200
+        assert response.status_code == 200 and 'id' in response.json()
 
 
     @allure.title('для авторизации нужно передать все обязательные поля')
@@ -31,7 +31,7 @@ class TestLoginCourier:
         }
 
         response = requests.post(f"{Urls.base_url}{Urls.api_login_courier}", data=payload)
-        assert response.status_code == 200
+        assert response.status_code == 200 and 'id' in response.json()
 
 
     @allure.title('система вернёт ошибку, если неправильно указать логин или пароль')
@@ -46,8 +46,7 @@ class TestLoginCourier:
         }
 
         response = requests.post(f"{Urls.base_url}{Urls.api_login_courier}", data=payload)
-        assert response.status_code == 404
-
+        assert response.status_code == 404 and response.json() == {'code': 404, 'message': 'Учетная запись не найдена'}
 
     @allure.title('если какого-то поля нет, запрос возвращает ошибку')
     def test_login_courier_non_login_fields(self):
@@ -66,7 +65,7 @@ class TestLoginCourier:
     def test_login_courier_non_user(self,create_courier_dto):
 
         response = requests.post(f"{Urls.base_url}{Urls.api_login_courier}", data=create_courier_dto)
-        assert response.status_code == 404
+        assert response.status_code == 404 and response.json() == {'code': 404, 'message': 'Учетная запись не найдена'}
 
 
     @allure.title('успешный запрос возвращает id')
@@ -80,4 +79,4 @@ class TestLoginCourier:
         }
 
         response = requests.post(f"{Urls.base_url}{Urls.api_login_courier}", data=payload)
-        assert  'id' in response.json()
+        assert response.status_code == 200 and 'id' in response.json()

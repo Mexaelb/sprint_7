@@ -9,5 +9,4 @@ class TestGetOrder:
 
             response = requests.get(f"{Urls.base_url}{Urls.api_get_order}")
 
-            assert response.status_code == 200
-            assert 'orders' in response.json()
+            assert response.status_code == 200 and 'orders' in response.json()

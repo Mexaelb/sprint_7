@@ -9,8 +9,7 @@ class TestCreateCourier:
     def test_create_courier(self,create_courier_dto):
 
         response = requests.post(f"{Urls.base_url}{Urls.api_create_courier}", data=create_courier_dto)
-        assert response.json() == {'ok': True}
-        assert response.status_code == 201
+        assert response.json() == {'ok': True} and response.status_code == 201
 
 
     @allure.title('Проверка нельзя создать 2х одинаковых курьеров')
@@ -19,8 +18,8 @@ class TestCreateCourier:
         response1 = requests.post(f"{Urls.base_url}{Urls.api_create_courier}", data=create_courier_dto)
         response2 = requests.post(f"{Urls.base_url}{Urls.api_create_courier}", data=create_courier_dto)
 
-        assert response1.status_code == 201
-        assert response2.status_code == 409
+        assert response1.status_code == 201 and response1.json() == {'ok': True}
+        assert response2.status_code == 409 and response2.json() == {'code': 409, 'message': 'Этот логин уже используется. Попробуйте другой.'}
 
 
     @pytest.mark.parametrize("missing_field", [
@@ -35,7 +34,8 @@ class TestCreateCourier:
 
         response = requests.post(f"{Urls.base_url}{Urls.api_create_courier}", data=create_courier_dto)
 
-        assert response.status_code == 400
+        assert response.status_code == 400 and response.json() == {'code': 400, 'message': 'Недостаточно данных для создания учетной записи'}
+
 
 
     @allure.title('Проверка создание курьера, запрос возвращает правильный код ответа')
@@ -43,14 +43,14 @@ class TestCreateCourier:
 
         response = requests.post(f"{Urls.base_url}{Urls.api_create_courier}", data=create_courier_dto)
 
-        assert response.status_code == 201
+        assert response.status_code == 201 and response.json() == {'ok': True}
 
 
     @allure.title('Проверка создание курьера, успешный запрос возвращает "ok":true')
     def test_create_courier_ok_response(self,create_courier_dto):
 
         response = requests.post(f"{Urls.base_url}{Urls.api_create_courier}", data=create_courier_dto)
-        assert response.json() == {'ok': True}
+        assert response.status_code == 201 and response.json() == {'ok': True}
 
 
     @pytest.mark.parametrize("missing_field", [
@@ -65,7 +65,7 @@ class TestCreateCourier:
 
         response = requests.post(f"{Urls.base_url}{Urls.api_create_courier}", data=create_courier_dto)
 
-        assert response.status_code == 400
+        assert response.status_code == 400 and response.json() == {'code': 400, 'message': 'Недостаточно данных для создания учетной записи'}
 
 
     @allure.title('Проверка создание курьера, если создать пользователя с логином, который уже есть, возвращается ошибка.')
@@ -80,5 +80,5 @@ class TestCreateCourier:
         response = requests.post(f"{Urls.base_url}{Urls.api_create_courier}", data=create_courier_dto)
         response2 = requests.post(f"{Urls.base_url}{Urls.api_create_courier}", data=payload2)
 
-        assert response.status_code == 201
-        assert response2.status_code == 409
+        assert response.status_code == 201 and response.json() == {'ok': True}
+        assert response2.status_code == 409 and response2.json() == {'code': 409, 'message': 'Этот логин уже используется. Попробуйте другой.'}
