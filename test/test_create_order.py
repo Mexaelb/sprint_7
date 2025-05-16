@@ -1,8 +1,6 @@
-import json
 import pytest
-import requests
 import allure
-from test_data import Urls, TestData
+from src.order import OrderClass
 
 class TestCreateOrder:
 
@@ -16,8 +14,7 @@ class TestCreateOrder:
     @allure.title('можно создать заказ с такими цветами — {colour_list}')
     def test_create_order_color(self,colour_list):
 
-        f = TestData()
+        create_order = OrderClass()
+        status_code, response = create_order.create_order(colour_list)
 
-        response = requests.post(f"{Urls.base_url}{Urls.api_create_order}", data=json.dumps(f.create_order_dto(colour_list)))
-
-        assert response.status_code == 201 and 'track' in response.json()
+        assert status_code == 201 and 'track' in response

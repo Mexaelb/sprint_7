@@ -1,5 +1,7 @@
 import string
 import random
+import allure
+
 
 class Urls:
 
@@ -9,10 +11,13 @@ class Urls:
     api_login_courier = "/api/v1/courier/login"
     api_create_order = "/api/v1/orders"
     api_get_order = "/api/v1/orders"
+    api_delete_courier = "/api/v1/courier/"
+    api_cancel_order = "/api/v1/orders/cancel"
 
 class TestData:
 
     @staticmethod
+    @allure.step('получение тестовых данных заказа')
     def create_order_dto(colour_list):
 
         payload = {
@@ -30,6 +35,7 @@ class TestData:
         return payload
 
     @staticmethod
+    @allure.step('создание логин/пароль/имя курьера')
     def login_pass_name_courier_dto():
         def generate_random_string(length):
             letters = string.ascii_lowercase
