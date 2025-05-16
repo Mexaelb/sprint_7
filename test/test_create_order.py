@@ -18,6 +18,6 @@ class TestCreateOrder:
 
         f = TestData()
 
-        response = requests.post(f"{Urls.base_url}{Urls.api_create_order}", data=json.dumps(f.test_create_order_dto(colour_list)))
+        response = requests.post(f"{Urls.base_url}{Urls.api_create_order}", data=json.dumps(f.create_order_dto(colour_list)))
 
         assert response.status_code == 201 and 'track' in response.json()

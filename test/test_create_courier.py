@@ -36,8 +36,8 @@ class TestCreateCourier:
     def test_all_field_create_courier(self,missing_field):
 
         ff = TestData()
-        login_pass = ff.login_pass_name_courier_dto().pop(missing_field)
-
+        login_pass = ff.login_pass_name_courier_dto()
+        login_pass.pop(missing_field)
         response = requests.post(f"{Urls.base_url}{Urls.api_create_courier}", data=login_pass)
 
         assert response.status_code == 400 and response.json() == {'code': 400, 'message': 'Недостаточно данных для создания учетной записи'}
@@ -72,7 +72,8 @@ class TestCreateCourier:
     def test_create_courier_no_all_fields(self,missing_field):
 
         ff = TestData()
-        login_pass = ff.login_pass_name_courier_dto().pop(missing_field)
+        login_pass = ff.login_pass_name_courier_dto()
+        login_pass.pop(missing_field)
 
         response = requests.post(f"{Urls.base_url}{Urls.api_create_courier}", data=login_pass)
 

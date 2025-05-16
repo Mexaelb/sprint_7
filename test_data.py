@@ -12,7 +12,8 @@ class Urls:
 
 class TestData:
 
-    def test_create_order_dto(self, colour_list):
+    @staticmethod
+    def create_order_dto(colour_list):
 
         payload = {
             "firstName": "Naruto",
@@ -28,7 +29,8 @@ class TestData:
 
         return payload
 
-    def login_pass_name_courier_dto(self):
+    @staticmethod
+    def login_pass_name_courier_dto():
         def generate_random_string(length):
             letters = string.ascii_lowercase
             random_string = ''.join(random.choice(letters) for i in range(length))
