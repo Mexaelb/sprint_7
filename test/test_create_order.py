@@ -17,7 +17,6 @@ class TestCreateOrder:
     def test_create_order_color(self,colour_list):
 
         f = TestData()
-        f.test_create_order_dto(colour_list)
 
         response = requests.post(f"{Urls.base_url}{Urls.api_create_order}", data=json.dumps(f.test_create_order_dto(colour_list)))
 

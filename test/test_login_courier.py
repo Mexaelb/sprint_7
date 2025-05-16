@@ -1,5 +1,5 @@
 import requests
-from test_data import Urls
+from test_data import Urls, TestData
 import allure
 from user_generate import register_new_courier_and_return_login_password
 
@@ -31,6 +31,7 @@ class TestLoginCourier:
         }
 
         response = requests.post(f"{Urls.base_url}{Urls.api_login_courier}", data=payload)
+
         assert response.status_code == 200 and 'id' in response.json()
 
 
@@ -46,6 +47,7 @@ class TestLoginCourier:
         }
 
         response = requests.post(f"{Urls.base_url}{Urls.api_login_courier}", data=payload)
+
         assert response.status_code == 404 and response.json() == {'code': 404, 'message': 'Учетная запись не найдена'}
 
     @allure.title('если какого-то поля нет, запрос возвращает ошибку')
@@ -58,13 +60,16 @@ class TestLoginCourier:
         }
 
         response = requests.post(f"{Urls.base_url}{Urls.api_login_courier}", data=payload)
+
         assert response.status_code == 400
 
 
     @allure.title('если авторизоваться под несуществующим пользователем, запрос возвращает ошибку;')
-    def test_login_courier_non_user(self,create_courier_dto):
+    def test_login_courier_non_user(self):
 
-        response = requests.post(f"{Urls.base_url}{Urls.api_login_courier}", data=create_courier_dto)
+        ff = TestData()
+        response = requests.post(f"{Urls.base_url}{Urls.api_login_courier}", data=ff.login_pass_name_courier_dto())
+
         assert response.status_code == 404 and response.json() == {'code': 404, 'message': 'Учетная запись не найдена'}
 
 
@@ -79,4 +84,5 @@ class TestLoginCourier:
         }
 
         response = requests.post(f"{Urls.base_url}{Urls.api_login_courier}", data=payload)
+
         assert response.status_code == 200 and 'id' in response.json()
