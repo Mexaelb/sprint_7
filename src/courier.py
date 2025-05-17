@@ -24,7 +24,51 @@ class CourierClass:
 
         payload = {
             "login": f['login'],
-            "password": f['password'],
+            "password": f['password']
         }
         response = requests.post(f"{Urls.base_url}{Urls.api_login_courier}", data=payload)
+        return response.status_code, response.json()
+
+    @allure.step('авторизация с неправильными данными курьера')
+    def login_courier_error_fields(self):
+
+        login_pass = CourierClass()
+        u = login_pass.register_new_courier_and_return_login_password()
+        u2 = login_pass.register_new_courier_and_return_login_password()
+
+        payload = {
+            "login": u['login'],
+            "password": u2['password']
+        }
+
+        response = requests.post(f"{Urls.base_url}{Urls.api_login_courier}", data=payload)
+        return response.status_code, response.json()
+
+    @allure.step('авторизация курьера с отсутствием 1ого обязательного поля')
+    def login_courier_non_login_fields(self):
+
+        login_pass = CourierClass()
+        f = login_pass.register_new_courier_and_return_login_password()
+
+        payload = {
+            "password": f['password']
+        }
+        response = requests.post(f"{Urls.base_url}{Urls.api_login_courier}", data=payload)
+        return response.status_code, response.json()
+
+    @allure.step('авторизоваться под несуществующим пользователем')
+    def login_courier_non_user(self):
+
+        dto_payload = TestData()
+        login_pass_name = dto_payload.login_pass_name_courier_dto()
+
+        response = requests.post(f"{Urls.base_url}{Urls.api_login_courier}", data=login_pass_name)
+        return response.status_code, response.json()
+
+    @allure.step('регистрация нового курьера')
+    def register_new_courier_and_return_lp(self):
+        dto_payload = TestData()
+        login_pass_name = dto_payload.login_pass_name_courier_dto()
+        response = requests.post(f'{Urls.base_url}{Urls.api_create_courier}', data=login_pass_name)
+
         return response.status_code, response.json()

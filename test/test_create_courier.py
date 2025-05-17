@@ -1,17 +1,18 @@
 import pytest
 import requests
-from test_data import Urls, TestData
 import allure
+from test_data import Urls, TestData
+from src.courier import CourierClass
 
 class TestCreateCourier:
 
     @allure.title('Проверка создание курьера')
     def test_create_courier(self):
 
-        ff = TestData()
+        login_pass = CourierClass()
+        status_code, response = login_pass.register_new_courier_and_return_lp()
 
-        response = requests.post(f"{Urls.base_url}{Urls.api_create_courier}", data=ff.login_pass_name_courier_dto())
-        assert response.json() == {'ok': True} and response.status_code == 201
+        assert response == {'ok': True} and status_code == 201
 
 
     @allure.title('Проверка нельзя создать 2х одинаковых курьеров')

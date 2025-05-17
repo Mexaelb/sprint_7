@@ -1,5 +1,3 @@
-import requests
-from test_data import Urls
 import allure
 from src.order import OrderClass
 
