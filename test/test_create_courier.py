@@ -1,7 +1,8 @@
 import pytest
 import requests
 import allure
-from test_data import Urls, TestData
+from test_data import Urls
+from helpers import TestData
 from src.courier import CourierClass
 
 class TestCreateCourier:

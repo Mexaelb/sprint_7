@@ -1,6 +1,7 @@
 import requests
 import allure
-from test_data import Urls, TestData
+from test_data import Urls
+from helpers import TestData
 
 class CourierClass:
 
@@ -19,8 +20,7 @@ class CourierClass:
     @allure.step('авторизация курьера')
     def login_courier(self):
 
-        login_pass = CourierClass()
-        f = login_pass.register_new_courier_and_return_login_password()
+        f = self.register_new_courier_and_return_login_password()
 
         payload = {
             "login": f['login'],
@@ -32,9 +32,8 @@ class CourierClass:
     @allure.step('авторизация с неправильными данными курьера')
     def login_courier_error_fields(self):
 
-        login_pass = CourierClass()
-        u = login_pass.register_new_courier_and_return_login_password()
-        u2 = login_pass.register_new_courier_and_return_login_password()
+        u = self.register_new_courier_and_return_login_password()
+        u2 = self.register_new_courier_and_return_login_password()
 
         payload = {
             "login": u['login'],
@@ -47,8 +46,7 @@ class CourierClass:
     @allure.step('авторизация курьера с отсутствием 1ого обязательного поля')
     def login_courier_non_login_fields(self):
 
-        login_pass = CourierClass()
-        f = login_pass.register_new_courier_and_return_login_password()
+        f = self.register_new_courier_and_return_login_password()
 
         payload = {
             "password": f['password']
