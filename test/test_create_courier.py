@@ -46,18 +46,9 @@ class TestCreateCourier:
 
 
 
-    @allure.title('Проверка создание курьера, запрос возвращает правильный код ответа')
+    @allure.title('Проверка создание курьера')
+    @allure.description('1. запрос возвращает правильный код ответа 2. успешный запрос возвращает "ok":true')
     def test_201_create_courier(self):
-
-        ff = TestData()
-
-        response = requests.post(f"{Urls.base_url}{Urls.api_create_courier}", data=ff.login_pass_name_courier_dto())
-
-        assert response.status_code == 201 and response.json() == {'ok': True}
-
-
-    @allure.title('Проверка создание курьера, успешный запрос возвращает "ok":true')
-    def test_create_courier_ok_response(self):
 
         ff = TestData()
 
