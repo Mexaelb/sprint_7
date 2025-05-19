@@ -4,18 +4,10 @@ import allure
 class TestLoginCourier:
 
     @allure.title('курьер может авторизоваться')
+    @allure.description('''курьер может авторизоваться,
+     для авторизации нужно передать все обязательные поля, 
+     успешный запрос возвращает id''')
     def test_login_courier(self):
-
-        login_pass = CourierClass()
-        status_code, response = login_pass.login_courier()
-        assert status_code == 200 and 'id' in response
-
-        courier_id = response['id']
-        login_pass.delete_courier(courier_id)
-
-
-    @allure.title('для авторизации нужно передать все обязательные поля')
-    def test_login_courier_all_fields(self):
 
         login_pass = CourierClass()
         status_code, response = login_pass.login_courier()
@@ -49,14 +41,3 @@ class TestLoginCourier:
         status_code, response = login_pass.login_courier_non_user()
 
         assert status_code == 404 and response == {'code': 404, 'message': 'Учетная запись не найдена'}
-
-
-    @allure.title('успешный запрос возвращает id')
-    def test_login_courier_ok_id(self):
-
-        login_pass = CourierClass()
-        status_code, response = login_pass.login_courier()
-        assert status_code == 200 and 'id' in response
-
-        courier_id = response['id']
-        login_pass.delete_courier(courier_id)
