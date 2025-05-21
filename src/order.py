@@ -2,7 +2,7 @@ import requests
 import json
 import allure
 from test_data import Urls
-from helpers import TestData
+from helpers.test_data_generation import TestData
 
 
 class OrderClass:
